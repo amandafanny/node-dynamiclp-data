@@ -48,11 +48,11 @@ export const getPass = async (obj: any) => {
   }
 
   if (name) {
-    state += ` AND passName = '${name}'`;
+    state += ` AND name = '${name}'`;
   }
 
   if (metaIdentityAddress) {
-    state += ` AND passName = '${metaIdentityAddress}'`;
+    state += ` AND metaIdentityAddress = '${metaIdentityAddress}'`;
   }
 
   const data = await connection.query(state);
