@@ -37,3 +37,30 @@ export const insertOrUpdateEconomicModule = async (obj: EconomicModuleItem) => {
 
   console.log(re);
 };
+
+export const getEconomicModule = async (obj: any) => {
+  const { owner, state, tokenId, economicAddress, member } = obj;
+  const connection = await pool;
+  let queryState = "SELECT * FROM economicModule WHERE 1=1";
+  if (owner) {
+    queryState += ` AND owner = '${owner}'`;
+  }
+  if (state) {
+    queryState += ` AND state = ${Number(state)}`;
+  }
+
+  if (tokenId) {
+    queryState += ` AND tokenId = ${Number(tokenId)}`;
+  }
+
+  if (economicAddress) {
+    queryState += ` AND economicAddress = '${economicAddress}'`;
+  }
+
+  if (member) {
+    queryState += ` AND member = ${Number(member)}`;
+  }
+
+  const data = await connection.query(queryState);
+  return data;
+};

@@ -3,6 +3,10 @@ import express, { Request, Response } from "express";
 import json from "./utils/json";
 import contract, { contractAddressToName } from "./contract";
 import pool from "./pool";
+import { getMember } from "./sql/member";
+import { getPass } from "./sql/pass";
+import { getEconomicModule } from "./sql/economicModule";
+import { getLnModule } from "./sql/lnModule";
 
 const port = 8000;
 
@@ -70,9 +74,22 @@ app.get("/lastBlock", async (req: Request, res: Response) => {
 });
 
 app.get("/getMember", async (req: Request, res: Response) => {
-  const { owner, passName } = req.query;
-  const connection = await pool;
-  const data = await connection.query("SELECT * FROM member");
+  const data = await getMember(req.query);
+  return res.status(200).json(data);
+});
+
+app.get("/getPass", async (req: Request, res: Response) => {
+  const data = await getPass(req.query);
+  return res.status(200).json(data);
+});
+
+app.get("/getLnModule", async (req: Request, res: Response) => {
+  const data = await getLnModule(req.query);
+  return res.status(200).json(data);
+});
+
+app.get("/getEconomicModule", async (req: Request, res: Response) => {
+  const data = await getEconomicModule(req.query);
   return res.status(200).json(data);
 });
 

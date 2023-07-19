@@ -54,3 +54,34 @@ export const burnMember = async (
   ).query(burnMemberQuery, [tokenId, metaIdentityAddress]);
   console.log(re);
 };
+
+export const getMember = async (obj: any) => {
+  const { owner, passName, tokenId, name, metaIdentityAddress, burn } = obj;
+  const connection = await pool;
+  let state = "SELECT * FROM member WHERE 1=1";
+  if (owner) {
+    state += ` AND owner = '${owner}'`;
+  }
+  if (passName) {
+    state += ` AND passName = '${passName}'`;
+  }
+
+  if (tokenId) {
+    state += ` AND tokenId = ${Number(tokenId)}`;
+  }
+
+  if (name) {
+    state += ` AND passName = '${name}'`;
+  }
+
+  if (metaIdentityAddress) {
+    state += ` AND name = '${metaIdentityAddress}'`;
+  }
+
+  if (burn) {
+    state += ` AND name = '${burn}'`;
+  }
+
+  const data = await connection.query(state);
+  return data;
+};

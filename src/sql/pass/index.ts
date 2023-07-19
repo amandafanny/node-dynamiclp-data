@@ -34,3 +34,26 @@ export const insertOrUpdatePass = async (obj: PassItem) => {
 
   console.log(re);
 };
+
+export const getPass = async (obj: any) => {
+  const { tokenId, owner, name, metaIdentityAddress } = obj;
+  const connection = await pool;
+  let state = "SELECT * FROM pass WHERE 1=1";
+  if (tokenId) {
+    state += ` AND tokenId = ${Number(tokenId)}`;
+  }
+
+  if (owner) {
+    state += ` AND owner = '${owner}'`;
+  }
+
+  if (name) {
+    state += ` AND passName = '${name}'`;
+  }
+
+  if (metaIdentityAddress) {
+    state += ` AND passName = '${metaIdentityAddress}'`;
+  }
+
+  const data = await connection.query(state);
+};

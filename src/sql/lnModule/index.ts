@@ -46,3 +46,51 @@ export const insertOrUpdateLnModule = async (obj: LnModuleItem) => {
 
   console.log(re);
 };
+
+export const getLnModule = async (obj: any) => {
+  const {
+    economicAddress,
+    vaultAddress,
+    tvlBalance,
+    tvlDecimals,
+    pendingToken,
+    mintPrice,
+    mintFee,
+    burnFee,
+  } = obj;
+  const connection = await pool;
+  let state = "SELECT * FROM lnModule WHERE 1=1";
+  if (economicAddress) {
+    state += ` AND economicAddress = '${economicAddress}'`;
+  }
+  if (vaultAddress) {
+    state += ` AND vaultAddress = '${vaultAddress}'`;
+  }
+
+  if (tvlBalance) {
+    state += ` AND tvlBalance = ${Number(tvlBalance)}`;
+  }
+
+  if (tvlDecimals) {
+    state += ` AND tvlDecimals = ${Number(tvlDecimals)}`;
+  }
+
+  if (pendingToken) {
+    state += ` AND pendingToken = ${Number(pendingToken)}`;
+  }
+
+  if (mintPrice) {
+    state += ` AND mintPrice = ${Number(mintPrice)}`;
+  }
+
+  if (mintFee) {
+    state += ` AND mintFee = ${Number(mintFee)}`;
+  }
+
+  if (burnFee) {
+    state += ` AND burnFee = ${Number(burnFee)}`;
+  }
+
+  const data = await connection.query(state);
+  return data;
+};
