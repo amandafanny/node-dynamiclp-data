@@ -18,6 +18,11 @@ export const provider = new ethers.JsonRpcProvider(
 );
 
 const app = express();
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 app.use(express.json());
 
 app.get("/log", async (req: Request, res: Response) => {
