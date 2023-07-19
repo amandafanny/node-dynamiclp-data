@@ -7,5 +7,9 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "node"
-  }
+  },
+  "include": [
+    "src/index.ts",
+    "src/service.ts"
+  ]
 }
