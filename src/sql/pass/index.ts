@@ -56,4 +56,5 @@ export const getPass = async (obj: any) => {
   }
 
   const data = await connection.query(state);
+  return data;
 };

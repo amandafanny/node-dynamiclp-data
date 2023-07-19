@@ -2,7 +2,6 @@ import { ethers } from "ethers";
 import express, { Request, Response } from "express";
 import json from "./utils/json";
 import contract, { contractAddressToName } from "./contract";
-import pool from "./pool";
 import { getMember } from "./sql/member";
 import { getPass } from "./sql/pass";
 import { getEconomicModule } from "./sql/economicModule";
