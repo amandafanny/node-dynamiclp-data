@@ -40,7 +40,6 @@ export const getPass = async () => {
       insertOrUpdatePass(obj);
       await getMember(metaIdentityAddress, name);
     }
-    // console.log("list", list);
   } catch (error) {
     console.error("Error getting contract state:", error);
   }

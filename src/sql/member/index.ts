@@ -17,13 +17,14 @@ CREATE TABLE IF NOT EXISTS member (
 export const insertOrUpdateMember = async (obj: MemberItem) => {
   const connection = await (await pool).getConnection();
   const insertOrUpdateMember = `
-    INSERT INTO member (tokenId, name, owner, tokenURIData, metaIdentityAddress, passName)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO member (tokenId, name, owner, tokenURIData, metaIdentityAddress, passName, burn)
+    VALUES (?, ?, ?, ?, ?, ?, false)
     ON DUPLICATE KEY UPDATE
       name = VALUES(name),
       owner = VALUES(owner),
       tokenURIData = VALUES(tokenURIData),
-      passName = VALUES(passName);
+      passName = VALUES(passName),
+      burn = VALUES(burn);
   `;
 
   const re = await connection.query(insertOrUpdateMember, [
@@ -71,15 +72,15 @@ export const getMember = async (obj: any) => {
   }
 
   if (name) {
-    state += ` AND passName = '${name}'`;
+    state += ` AND name = '${name}'`;
   }
 
   if (metaIdentityAddress) {
-    state += ` AND name = '${metaIdentityAddress}'`;
+    state += ` AND metaIdentityAddress = '${metaIdentityAddress}'`;
   }
 
   if (burn) {
-    state += ` AND name = '${burn}'`;
+    state += ` AND burn = ${burn}`;
   }
 
   const data = await connection.query(state);
