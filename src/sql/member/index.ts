@@ -80,7 +80,7 @@ export const getMember = async (obj: any) => {
   }
 
   if (burn) {
-    state += ` AND burn = ${burn}`;
+    state += ` AND burn = ${Boolean(burn)}`;
   }
 
   const data = await connection.query(state);
