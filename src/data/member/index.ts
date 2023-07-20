@@ -27,7 +27,7 @@ export const getMember = async (
     // 调用合约的视图函数或读取公共变量
     const nextTokenId = await contract.nextTokenId();
     const list: MemberItem[] = [];
-    console.log(metaIdentityAddress, "nextTokenId", nextTokenId, passName);
+    console.log("getMember", [metaIdentityAddress, nextTokenId, passName]);
     for (let i = 1; i < nextTokenId; i++) {
       try {
         const name = await contract.name(Typed.uint256(i));
@@ -51,7 +51,6 @@ export const getMember = async (
         if (e?.reason === "ERC721: invalid token ID") {
           burnMember(i, metaIdentityAddress);
         }
-        throw e;
       }
     }
     console.log("list", list);
