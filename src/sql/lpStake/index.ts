@@ -34,14 +34,14 @@ export const getLpStake = async (obj: any) => {
   const connection = await pool;
   let state = "SELECT * FROM lpStake WHERE 1=1";
   if (token) {
-    state += ` AND owner = '${token}'`;
+    state += ` AND token = '${token}'`;
   }
   if (user) {
-    state += ` AND passName = '${user}'`;
+    state += ` AND user = '${user}'`;
   }
 
   if (stakeAmount) {
-    state += ` AND passName = ${stakeAmount}`;
+    state += ` AND stakeAmount = ${stakeAmount}`;
   }
 
   const data = await connection.query(state);
