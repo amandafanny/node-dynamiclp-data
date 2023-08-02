@@ -4,7 +4,7 @@ export const createDealTableQuery = `
 CREATE TABLE IF NOT EXISTS deal (
   id INT PRIMARY KEY,
   blockNumber BIGINT,
-  lp BIGINT,
+  lp BIGINT
 )
 `;
 

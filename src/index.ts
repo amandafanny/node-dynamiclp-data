@@ -33,8 +33,8 @@ const run = async () => {
       await updateDeal("lp", number);
     }
 
-    if (deal[0]?.lp < number) {
-      getLpStake(number);
+    if (deal[0]?.lp + 12 < number) {
+      getLpStake(deal[0]?.lp, number);
     }
 
     await sleep(1000);

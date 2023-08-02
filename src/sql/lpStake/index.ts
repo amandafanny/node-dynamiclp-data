@@ -1,34 +1,28 @@
-import { MemberItem } from "../../data/member";
+import { LPStakeItem } from "../../data/lpStake";
 import pool from "../../pool";
 
-export const createMemberTableQuery = `
+export const createLPStakeTableQuery = `
 CREATE TABLE IF NOT EXISTS lpStake (
-  tokenId INT,
-  owner VARCHAR(42),
-  stake
+  token VARCHAR(42),
+  user VARCHAR(42),
+  stakeAmount DECIMAL(65, 0),
+  PRIMARY KEY (token, user)
 )
 `;
 
-export const insertOrUpdateMember = async (obj: MemberItem) => {
+export const insertOrUpdateLPStake = async (obj: LPStakeItem) => {
   const connection = await (await pool).getConnection();
-  const insertOrUpdateMember = `
-    INSERT INTO member (tokenId, name, owner, tokenURIData, metaIdentityAddress, passName, burn)
-    VALUES (?, ?, ?, ?, ?, ?, false)
+  const insertOrUpdateLPStake = `
+    INSERT INTO lpStake (token, user, stakeAmount)
+    VALUES (?, ?, ?)
     ON DUPLICATE KEY UPDATE
-      name = VALUES(name),
-      owner = VALUES(owner),
-      tokenURIData = VALUES(tokenURIData),
-      passName = VALUES(passName),
-      burn = VALUES(burn);
+      stakeAmount = VALUES(stakeAmount);
   `;
 
-  const re = await connection.query(insertOrUpdateMember, [
-    obj.tokenId,
-    obj.name,
-    obj.owner,
-    obj.tokenURIData,
-    obj.metaIdentityAddress,
-    obj.passName,
+  const re = await connection.query(insertOrUpdateLPStake, [
+    obj.token,
+    obj.user,
+    obj.stakeAmount,
   ]);
 
   console.log(re);
@@ -36,30 +30,18 @@ export const insertOrUpdateMember = async (obj: MemberItem) => {
 };
 
 export const getLpStake = async (obj: any) => {
-  const { owner, passName, tokenId, name, metaIdentityAddress, burn } = obj;
+  const { token, user, stakeAmount } = obj;
   const connection = await pool;
-  let state = "SELECT * FROM member WHERE 1=1";
-  if (owner) {
-    state += ` AND owner = '${owner}'`;
+  let state = "SELECT * FROM lpStake WHERE 1=1";
+  if (token) {
+    state += ` AND owner = '${token}'`;
   }
-  if (passName) {
-    state += ` AND passName = '${passName}'`;
-  }
-
-  if (tokenId) {
-    state += ` AND tokenId = ${Number(tokenId)}`;
+  if (user) {
+    state += ` AND passName = '${user}'`;
   }
 
-  if (name) {
-    state += ` AND name = '${name}'`;
-  }
-
-  if (metaIdentityAddress) {
-    state += ` AND metaIdentityAddress = '${metaIdentityAddress}'`;
-  }
-
-  if (burn) {
-    state += ` AND burn = ${burn}`;
+  if (stakeAmount) {
+    state += ` AND passName = ${stakeAmount}`;
   }
 
   const data = await connection.query(state);

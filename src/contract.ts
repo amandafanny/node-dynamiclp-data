@@ -7,6 +7,7 @@ import { tvlStakingABI } from "./abis/tvl-staking";
 import { economicModuleHubABI } from "./abis/economic-module-hub";
 import data from "./address/run-latest.json";
 import stakeData from "./address/stake.json";
+import { stakingContractMainnetABI } from "./abis/staking-contract";
 
 const provider = new ethers.JsonRpcProvider(
   "https://eth-goerli.g.alchemy.com/v2/wxt4mRmkJ7dSffMidEpaxcVf-hTAashX"
@@ -27,6 +28,8 @@ const getAddress = (
   data.forEach((val) => {
     obj[val.contractName] = val.contractAddress as `0x${string}`;
   });
+
+  obj.LPStake = "0xeEB5091532f4E46C26326d71b0FDC039779C9c1b";
 
   return obj;
 };
@@ -74,6 +77,10 @@ export const contractInfo: Record<
   TreasuryWithNFT: {
     address: contractNameToAddress.TreasuryWithNFT,
     abi: treasuryWithNftABI,
+  },
+  LPStake: {
+    address: contractNameToAddress.LPStake,
+    abi: stakingContractMainnetABI,
   },
   // PAY_FOR_ALCHEMIST: {
   //   address: contractNameToAddress.PAY_FOR_ALCHEMIST,
