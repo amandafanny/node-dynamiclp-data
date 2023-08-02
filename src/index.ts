@@ -4,6 +4,7 @@ import { sleep } from "./utils/sleep";
 import { getPass } from "./data/pass";
 import { getEconomicModule } from "./data/economicModule";
 import { updateDeal } from "./sql/deal";
+import { getLpStake, stakeContractCreateBlock } from "./data/lpStake";
 import { init } from "./sql";
 
 // export const provider = new ethers.JsonRpcProvider(
@@ -16,15 +17,24 @@ export const provider = new ethers.JsonRpcProvider(
 
 const run = async () => {
   await init();
+  const deal = await (await pool).query(`SELECT * from deal`);
+  await updateDeal("lp", stakeContractCreateBlock);
+  console.log(deal);
 
   while (true) {
-    const complete = await (await pool).query(`SELECT blockNumber from deal`);
+    const deal = await (await pool).query(`SELECT * from deal`);
     const number = await provider.getBlockNumber();
-    console.log([number, complete[0]?.blockNumber]);
-    if (complete[0]?.blockNumber < number) {
+    console.log([number, deal[0]]);
+
+    if (deal[0]?.blockNumber < number) {
       await getPass();
       await getEconomicModule();
-      await updateDeal(number);
+      await updateDeal("blockNumber", number);
+      await updateDeal("lp", number);
+    }
+
+    if (deal[0]?.lp < number) {
+      getLpStake(number);
     }
 
     await sleep(1000);
