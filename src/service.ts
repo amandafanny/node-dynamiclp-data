@@ -6,6 +6,7 @@ import { getMember } from "./sql/member";
 import { getPass } from "./sql/pass";
 import { getEconomicModule } from "./sql/economicModule";
 import { getLnModule } from "./sql/lnModule";
+import { getLpStake } from "./sql/lpStake";
 
 const port = 8000;
 
@@ -94,6 +95,11 @@ app.get("/getLnModule", async (req: Request, res: Response) => {
 
 app.get("/getEconomicModule", async (req: Request, res: Response) => {
   const data = await getEconomicModule(req.query);
+  return res.status(200).json(data);
+});
+
+app.get("/getLPStake", async (req: Request, res: Response) => {
+  const data = await getLpStake(req.query);
   return res.status(200).json(data);
 });
 
