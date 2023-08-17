@@ -8,10 +8,9 @@ import { economicModuleHubABI } from "./abis/economic-module-hub";
 import data from "./address/run-latest.json";
 import stakeData from "./address/stake.json";
 import { stakingContractMainnetABI } from "./abis/staking-contract";
+import { rpcUrl } from "./config";
 
-const provider = new ethers.JsonRpcProvider(
-  "https://eth-goerli.g.alchemy.com/v2/wxt4mRmkJ7dSffMidEpaxcVf-hTAashX"
-);
+const provider = new ethers.JsonRpcProvider(rpcUrl);
 
 export interface ContractAddresses {
   [prop: string]: `0x${string}`;
