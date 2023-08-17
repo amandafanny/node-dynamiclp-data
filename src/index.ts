@@ -6,14 +6,13 @@ import { getEconomicModule } from "./data/economicModule";
 import { updateDeal } from "./sql/deal";
 import { getLpStake, stakeContractCreateBlock } from "./data/lpStake";
 import { init } from "./sql";
+import { rpcUrl } from "./config";
 
 // export const provider = new ethers.JsonRpcProvider(
 //   "https://hub-private-rpc.mimic.coffee"
 // );
 
-export const provider = new ethers.JsonRpcProvider(
-  "https://eth-goerli.g.alchemy.com/v2/wxt4mRmkJ7dSffMidEpaxcVf-hTAashX"
-);
+export const provider = new ethers.JsonRpcProvider(rpcUrl);
 
 const run = async () => {
   await init();

@@ -7,6 +7,7 @@ import { getPass } from "./sql/pass";
 import { getEconomicModule } from "./sql/economicModule";
 import { getLnModule } from "./sql/lnModule";
 import { getLpStake } from "./sql/lpStake";
+import { rpcUrl } from "./config";
 
 const port = 8000;
 
@@ -14,9 +15,7 @@ const port = 8000;
 //   "https://hub-private-rpc.mimic.coffee"
 // );
 
-export const provider = new ethers.JsonRpcProvider(
-  "https://eth-goerli.g.alchemy.com/v2/wxt4mRmkJ7dSffMidEpaxcVf-hTAashX"
-);
+export const provider = new ethers.JsonRpcProvider(rpcUrl);
 
 const app = express();
 
